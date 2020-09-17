@@ -11,7 +11,7 @@
 * This is a Hospital Management System WebApp made by Nodejs with separate Panel for Admin and Separate Panel for receptionist(user).
 
   *	 hospital management system web app is developed for keeping records of hospital data and managing it regarding patients ,doctors and appointments.
-  *	 this web app will provide facility to admin to login using his credentials and view, add, modify the hospital records.
+  *	 this web app will provide facility to admin and user to login using his credentials and view, add, modify the hospital records.
   *	 the main motive of this system is to computerize all the records regarding doctors, patients and be able to access it anywhere from the world
 
 
