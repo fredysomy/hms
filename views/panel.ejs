@@ -1,16 +1,19 @@
- <%- include('header'); -%>
+ <%- include('./partials/header'); -%>
 
- <% if(user=="ad"){%>
-
- 	Signed in as Ad
- 	
- <%}
- else
- {%>  
-
-  Signed in as Us 
-
-<%}%>
-
-
- <%- include('footer'); -%>
+<div class="container">
+	<div class="jumbotron">
+  		<div class="container">
+  			<h1 class="display-4">
+  				Hello,
+  				<% if(user=="ad"){%>
+  					Admin
+  				<%}else{%>
+  					User
+  				<%}%>
+  			</h1>
+  			<hr class="my-4">
+  			
+		</div>
+	</div>
+</div>
+ <%- include('./partials/footer'); -%>

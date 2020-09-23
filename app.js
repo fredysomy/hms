@@ -9,9 +9,12 @@ var LocalStrategy=require("passport-local");
 var User    =require("./models/user");
 
 
-//var docRoutes =require("./routes/doctor");
-//var patRoutes=require("./routes/patient");
+
 var indexRoutes=require("./routes/index");
+var docRoutes =require("./routes/doctor");
+var patRoutes=require("./routes/patient");
+var appointRoutes=require("./routes/appointment");
+
 app.use(express.static(__dirname + "/public"))
 
 
@@ -39,6 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req,res,next) {
 	res.locals.currentUser=req.user;
+	console.log(req.user);
 	next();
 });
 
@@ -48,11 +52,9 @@ app.use(function(req,res,next) {
 
 //requiring routes
 app.use(indexRoutes);
-//app.use(docRoutes);
-//app.use(patRoutes);
-
-
-
+app.use(docRoutes);
+app.use(patRoutes);
+app.use(appointRoutes);
 
 
 

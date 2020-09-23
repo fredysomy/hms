@@ -2,14 +2,14 @@ var express=require("express");
 var router= express.Router();
 var passport=require("passport");
 var User    =require("../models/user");
-
+var middleware=require("../middleware");
 //landing page
 router.get("/",function(req,res) {
 	// body...
 	res.redirect("/login");
 });
 
-router.get("/panel",function(req,res) {
+router.get("/panel",middleware.isLoggedIn,function(req,res) {
 	res.render("panel",{user:req.user.username});
 	
 })
