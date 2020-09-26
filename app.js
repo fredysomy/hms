@@ -4,10 +4,13 @@ var bodyParser=require("body-parser");
 var mongoose=require("mongoose");
 var passport=require("passport");
 var LocalStrategy=require("passport-local");
-//var doc=require("./models/doctor");
-//var pat =require("./models/patient");
-var User    =require("./models/user");
+const sgMail = require('@sendgrid/mail');
+var methodOverride=require("method-override");
 
+
+var User    =require("./models/user");
+var Doctor=require("./models/doctor");
+var Patient=require("./models/patient");
 
 
 var indexRoutes=require("./routes/index");
@@ -15,12 +18,23 @@ var docRoutes =require("./routes/doctor");
 var patRoutes=require("./routes/patient");
 var appointRoutes=require("./routes/appointment");
 
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb://localhost/hmsprac");
+mongoose.connect("mongodb://localhost/hmsprac",function(err) {
+	if(err)
+	{
+		console.log(err);
+	}
+	else
+	{
+		console.log("we are connected")
+	}
+	// body...
+});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine","ejs");
 
@@ -45,7 +59,7 @@ app.use(function(req,res,next) {
 	console.log(req.user);
 	next();
 });
-
+require('dotenv').config();
 
 
 

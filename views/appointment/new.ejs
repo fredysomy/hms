@@ -1,0 +1,48 @@
+<%- include('../partials/header'); -%>
+
+<div class="container">
+	<div class="row">
+		<h1 style="text-align:center">Add New Appointment</h1>
+		<div style="width:30% ;margin:25px auto ">
+
+			<form action="addAppointment" method="POST">
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="enter name" name="pname">
+			</div>
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="enter Reason" name="reason">
+			</div>
+			<div class="form-group">
+				<label for="name">select Doctor</label>
+				<select class="form-control" name="dname" id="name">
+					<%doctor.forEach(function(doctor){%>
+  						<option value="<%=doctor.dname%>"><%=doctor.dname%></option>
+  					<%});%>
+				</select>
+			</div>
+
+ 
+			
+			
+			
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block">submit</button>
+			</div>
+
+				
+				
+				
+	
+			</form>
+			<a href="/getAppointment">Go back!</a>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+
+<%- include('../partials/footer'); -%>
