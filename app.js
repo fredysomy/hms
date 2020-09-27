@@ -63,7 +63,7 @@ app.use(function(req,res,next) {
 
 
 const port = process.env.PORT_NO;
-
+const host = process.env.HOSTNAME;
 
 //requiring routes
 app.use(indexRoutes);
@@ -79,9 +79,9 @@ app.use(appointRoutes);
 
 
 
-app.listen(port,'localhost',function() {
+app.listen(port,host,function() {
 	// body...
 	console.log("Listening to port "+port);
-	console.log(" Local Server has Started");
+	console.log(host+ " has Started");
 
 });
