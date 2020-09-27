@@ -54,7 +54,7 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 				{	
 					//sendgrid
 					res.render("appointment/show");
-					sgMail.setApiKey("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");
+					sgMail.setApiKey();
 					const msg = {
   									to: obj.pemail,
   									from: 'hmsofficial1011@gmail.com',
