@@ -17,7 +17,7 @@ var indexRoutes=require("./routes/index");
 var docRoutes =require("./routes/doctor");
 var patRoutes=require("./routes/patient");
 var appointRoutes=require("./routes/appointment");
-
+require('dotenv').config();
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
@@ -41,8 +41,9 @@ app.set("view engine","ejs");
 
 
 //passport configuration
+var secret=process.env.SECRET_KEY;
 app.use(require("express-session")({
-	secret:"Once again Bittu wins cutest dog!",
+	secret:secret,
 	resave: false,
 	saveUninitialized:false
 }));
@@ -59,9 +60,9 @@ app.use(function(req,res,next) {
 	console.log(req.user);
 	next();
 });
-require('dotenv').config();
 
 
+const port = process.env.PORT_NO;
 
 
 //requiring routes
@@ -78,9 +79,9 @@ app.use(appointRoutes);
 
 
 
-app.listen(5000,'localhost',function() {
+app.listen(port,'localhost',function() {
 	// body...
-	console.log("Listening to port"+5000);
+	console.log("Listening to port "+port);
 	console.log(" Local Server has Started");
 
 });
