@@ -67,6 +67,8 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 					//sendgrid
 					res.redirect("/getappointment");
 					sgMail.setApiKey(key);
+
+
 					const msg = {
   									to: obj.pemail,
   									from: 'hmsofficial1011@gmail.com',
@@ -107,7 +109,11 @@ router.delete("/deleteAppointment/:id",function(req,res) {
 		}
 	})
 })
+<<<<<<< HEAD
 
 
 
 module.exports=router;
+=======
+module.exports=router;
+>>>>>>> 0bbc5416b7a899f53934152f5982a082f80ca0b4
