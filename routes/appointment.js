@@ -5,12 +5,24 @@ var Patient=require("../models/patient");
 var Doctor=require("../models/doctor");
 var Appointment=require("../models/appointment");
 const sgMail = require('@sendgrid/mail');
-router.get("/getappointment",middleware.isLoggedIn,function(req,res) {
-	res.render("appointment/show");
-	// body...
+require('dotenv').config();
+
+const key = process.env.SENDGRID_KEY;
+router.get("/getappointment",function(req,res) {
+	Appointment.find({},function(err,allappointments) {
+		if(err)
+		{
+			console.log(err);
+		}
+		else
+		{
+			console.log(key);
+			res.render("appointment/show",{appointments:allappointments});
+		}
+		// body...
+	})
+
 });
-
-
 
 
 
@@ -53,8 +65,8 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 				else
 				{	
 					//sendgrid
-					res.render("appointment/show");
-					sgMail.setApiKey("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");
+					res.redirect("/getappointment");
+					sgMail.setApiKey(key);
 					const msg = {
   									to: obj.pemail,
   									from: 'hmsofficial1011@gmail.com',
@@ -79,11 +91,23 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 	 
 })
 
-router.get("/editAppointment/:id",function(req,res) {
-	res.send("this will be editAppointment form");
+
+
+router.delete("/deleteAppointment/:id",function(req,res) {
+	Appointment.findByIdAndRemove(req.params.id,function(err) {
+		if(err)
+		{
+			res.redirect("/getappointment");
+		// body...
+		}
+		else
+		{
+			res.redirect("/getappointment");
+
+		}
+	})
 })
 
-router.get("/deleteAppointment/:id",function(req,res) {
-	res.send("deleteAppointment form");
-})
+
+
 module.exports=router;

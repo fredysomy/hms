@@ -6,6 +6,36 @@
   			<a class="btn btn-success btn-lg" href="/addAppointment">Add Appointments</a>
 		</div>
 	</div>
+	<div class="table-responsive">
+	<table class="table table-hover ">
+	<thead>
+	<tr>
+	<th>Patient Name</th>
+	<th>Reason</th>
+	<th>Doctor Name</th>
+	<th></th>
+	<th></th>
+	</tr>
+	</thead>
+	<%appointments.forEach(function(appoint){%>
+	<tr>
+	<td><%=appoint.pname%></td>
+	<td><%=appoint.areason%></td>
+	<td><%=appoint.dname%></td>
+	<td>
+	<%if(currentUser.username=="us"){%>
+	<a class="btn btn-md btn-warning" href="/editAppointment/<%=appoint._id%>">Edit</a>
+	</td>
+	<td>
+	<form class="delete-form" action="/deleteAppointment/<%=appoint._id%>?_method=DELETE" method="POST">
+                  <input type="submit" class="btn btn-md btn-danger" value="Cancel">
+    </form>
+	</td>
+	<%}%>
+	</tr>
+	<%});%>
+	</table>
+	</div>
 </div>
 
 
