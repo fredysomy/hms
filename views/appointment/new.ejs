@@ -13,6 +13,12 @@
 				<input class="form-control" type="text" placeholder="enter Reason" name="reason">
 			</div>
 			<div class="form-group">
+				<input class="form-control text-center" type="datetime-local" name="ddate">
+			</div>
+
+			
+
+			<div class="form-group">
 				<label for="name">select Doctor</label>
 				<select class="form-control" name="dname" id="name">
 					<%doctor.forEach(function(doctor){%>
@@ -41,8 +47,6 @@
 	</div>
 
 </div>
-
-
 
 
 <%- include('../partials/footer'); -%>

@@ -3,7 +3,9 @@ var mongoose = require("mongoose");
 var AppointmentSchema=mongoose.Schema({
 	areason:String,
 	pname:String,
-	dname:String
+	dname:String,
+	ddate:{type:Date}
+
 });
 
 

@@ -1,0 +1,52 @@
+<%- include('../partials/header'); -%>
+
+<div class="container">
+	<div class="row">
+		<h1 style="text-align:center">Edit Appointment</h1>
+		<div style="width:30% ;margin:25px auto ">
+
+			<form action="/editAppointment/<%=appointment._id%>?_method=PUT" method="POST">
+			<div class="form-group">
+				<input class="form-control" type="text" value="<%=appointment.pname%>"" name="appointment[pname]" size="20">
+			</div>
+			<div class="form-group">
+				<input class="form-control" type="text" value="<%=appointment.areason%>" name="appointment[areason]" size="100">
+			</div>
+			<div class="form-group">
+				<input class="form-control text-center" value="<%=appointment.ddate%>" type="datetime-local" name="appointment[ddate]">
+			</div>
+
+			<div class="form-group">
+				<label for="name">select Doctor</label>
+				<select class="form-control" name="appointment[dname]" id="name">
+					<%doctor.forEach(function(doctor){%>
+  						<option value="<%=doctor.dname%>"><%=doctor.dname%></option>
+  					<%});%>
+				</select>
+			</div>
+			
+ 
+			
+			
+			
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block">submit</button>
+			</div>
+
+				
+				
+				
+	
+			</form>
+			<a href="/getAppointment">Go back!</a>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+
+<%- include('../partials/footer'); -%>

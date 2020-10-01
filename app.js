@@ -22,6 +22,8 @@ var indexRoutes		=require("./routes/index"),
 //required to use env file
 require('dotenv').config();
 
+
+
 //using public directory and method override package
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
@@ -29,7 +31,7 @@ app.use(methodOverride("_method"));
 //mongoose configuration
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb://localhost/hmsprac",function(err) {
+mongoose.connect(process.env.localDB,function(err) {
 	if(err)
 	{
 		console.log(err);

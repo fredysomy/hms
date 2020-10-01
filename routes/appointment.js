@@ -61,7 +61,9 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 	var pname=req.body.pname;
 	var areason=req.body.reason;
 	var dname=req.body.dname;
-	var newAppointment={pname:pname,areason:areason,dname:dname};
+	var ddate=req.body.ddate
+	console.log(ddate);
+	var newAppointment={pname:pname,areason:areason,dname:dname,ddate:ddate};
 
 	//before adding the appointment check whether name provided as patient name exist in patient model
 	Patient.findOne({pname:pname}, function(err,obj) {
@@ -87,7 +89,10 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 				{	
 					
 					res.redirect("/getAppointment");
+					const event = new Date(ddate);
+
 					//if appointment is created use sgmail to send confirmation email
+					var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',hour:'2-digit',minute:'2-digit' };
 					sgMail.setApiKey(key);
 
 
@@ -95,7 +100,7 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
   									to: obj.pemail,
   									from: 'hmsofficial1011@gmail.com',
   									subject: 'Comfirmation mail',
-  									text: 'your appointment with Doctor '+dname+' is confirmed for '+areason,
+  									text: 'your appointment with Doctor '+dname+' is confirmed for '+areason+" on "+event.toLocaleDateString("en-US",options),
 								};
 					sgMail.send(msg, (error, result) => {
     					if (error)
@@ -115,6 +120,77 @@ router.post("/addAppointment",middleware.isLoggedIn,function(req,res) {
 	 
 })
 
+router.get("/editAppointment/:id",function(req,res) {
+	Appointment.findById(req.params.id,function(err,foundApp) 
+	{
+				Doctor.find({},function(err,alldoctors) {
+				if(err)
+				{
+				console.log(err);
+				}
+				else
+				{	
+				console.log(foundApp);
+				res.render("appointment/edit",{doctor:alldoctors,appointment:foundApp});
+				}
+		// body...
+				})
+			
+			
+	});
+});
+
+
+router.put("/editAppointment/:id",function(req,res) {
+	var pname=req.body.pname;
+	var areason=req.body.reason;
+	var dname=req.body.dname;
+	var ddate=req.body.ddate;
+	Patient.findOne({pname:pname}, function(err,obj) 
+	{
+		if(!obj)
+		{
+				console.log(err);
+		}
+		else
+		{
+				Appointment.findByIdAndUpdate(req.params.id,req.body.appointment,function(err,updatedAppointment) 
+				{
+				// body...
+						if(err)
+						{
+						console.log(err);
+
+						}
+						else
+						{
+					
+							res.redirect("/getAppointment");
+							var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',hour:'2-digit',minute:'2-digit' };
+							sgMail.setApiKey(key);
+
+
+							const msg = {
+  											to: obj.pemail,
+  											from: 'hmsofficial1011@gmail.com',
+  											subject: 'Appointment details update Comfirmation mail',
+  											text: 'your appointment with Doctor '+dname+' for '+areason+' on ' +event.toLocaleDateString("en-US",options),
+										};
+							sgMail.send(msg, (error, result) => {
+    							if (error)
+    							{
+      								console.log(error);
+    							}
+    							else
+    							{
+     				 				console.log("sent");
+    							}
+								})
+						}
+				})
+		}
+	})
+})				
 
 //delete appointment route
 router.delete("/deleteAppointment/:id",function(req,res) {
